@@ -13,8 +13,10 @@
                  TitleBarHeight="27"
                  ShowIconOnTitleBar="True"
                  ResizeMode="CanResize"
-                 Topmost="{Binding PresentationProperties.ForceOnTop}"
-                 DataContext="{Binding RelativeSource={RelativeSource Self}}" SizeChanged="Window_SizeChanged" Closing="Window_Closing">
+                 Topmost="{Binding PresentationProperties.AlwaysOnTop}"
+                 DataContext="{Binding RelativeSource={RelativeSource Self}}"
+                 SizeChanged="Window_SizeChanged"
+                 Closing="Window_Closing">
     <mah:MetroWindow.TitleTemplate>
         <DataTemplate>
             <TextBlock Text="{TemplateBinding Content}"
@@ -26,20 +28,43 @@
                        FontFamily="Resources/#Patrick Hand" />
         </DataTemplate>
     </mah:MetroWindow.TitleTemplate>
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands ShowLastSeparator="False">
+            <Button Margin="0 0 20 0"
+                    Content="Settings"
+                    Click="SettingsClickEvent"
+                    ToolTip="Opens the settings window" />
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
     <Grid>
         <Grid.LayoutTransform>
             <ScaleTransform ScaleX="{Binding PresentationProperties.Zoom}" ScaleY="{Binding PresentationProperties.Zoom}" />
         </Grid.LayoutTransform>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-            <Grid>
-                <Grid.Background>
-                    <ImageBrush ImageSource="{Binding PresentationProperties.ImageSource}" TileMode="Tile" Stretch="None" AlignmentY="Top" ViewportUnits="Absolute" Viewport="0 0 666 666">
-                        <ImageBrush.Transform>
-                            <ScaleTransform CenterY="2" ScaleX="0.277777" ScaleY="0.277777"/>
-                        </ImageBrush.Transform>
-                    </ImageBrush>
-                </Grid.Background>
-                <TextBox x:Name="InputTextBox" FontSize="19" TextChanged="RichTextBoxTextChanged" AcceptsReturn="True" TextWrapping="Wrap"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <mah:MetroAnimatedSingleRowTabControl
+            Grid.Row="0"
+            mah:HeaderedControlHelper.HeaderFontSize="18"
+            mah:TabControlHelper.Underlined="SelectedTabItem">
+            <TabItem Header="this sheet fucks">
+            </TabItem>
+            <TabItem Header="not this one">
+            </TabItem>
+        </mah:MetroAnimatedSingleRowTabControl>
+        <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" Fill="{DynamicResource MahApps.Brushes.Accent}"/>
+            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.Background>
+                        <ImageBrush ImageSource="{Binding PresentationProperties.ImageSource}" TileMode="Tile" Stretch="None" AlignmentY="Top" ViewportUnits="Absolute" Viewport="0 0 666 666">
+                            <ImageBrush.Transform>
+                                <ScaleTransform CenterY="2" ScaleX="0.277777" ScaleY="0.277777"/>
+                            </ImageBrush.Transform>
+                        </ImageBrush>
+                    </Grid.Background>
+                    <TextBox x:Name="InputTextBox" FontSize="19" TextChanged="RichTextBoxTextChanged" AcceptsReturn="True" TextWrapping="Wrap"
                      Background="Transparent"
                      Foreground="{Binding PresentationProperties.InputTextColor}"
                      CaretBrush="{Binding PresentationProperties.InputTextColor}"
@@ -52,84 +77,84 @@
                      VerticalScrollBarVisibility="Disabled"
                      KeyDown="TextBoxKeyDownEvent"
                      AcceptsTab="True">
-                    <TextBox.ContextMenu>
-                        <ContextMenu 
+                        <TextBox.ContextMenu>
+                            <ContextMenu 
                         TextBlock.LineHeight="Auto"
                         TextBlock.LineStackingStrategy="MaxHeight"
                     >
-                            <MenuItem 
+                                <MenuItem 
                             Header="Cut"
                             Command="Cut"
                         />
-                            <MenuItem 
+                                <MenuItem 
                             Header="Copy" 
                             Command="Copy"
                         />
-                            <MenuItem 
+                                <MenuItem 
                             Header="Paste"
                             Command="Paste"
                         />
-                            <Separator/>
-                            <MenuItem 
+                                <Separator/>
+                                <MenuItem 
                             Header="Select All"
                             Command="SelectAll"
                         />
-                            <Separator/>
-                            <MenuItem 
+                                <Separator/>
+                                <MenuItem 
                             Header="Undo"
                             Command="Undo"
                         />
-                            <MenuItem 
+                                <MenuItem 
                             Header="Redo"
                             Command="Redo" 
                         />
-                            <Separator/>
-                            <MenuItem 
+                                <Separator/>
+                                <MenuItem 
                             Header="Clear All Text"
                             Click="ClickClear" 
                         />
-                            <Separator/>
-                            <MenuItem 
+                                <Separator/>
+                                <MenuItem 
                             Header="Zoom In"
                             Click="ZoomIn" 
                         />
-                            <MenuItem 
+                                <MenuItem 
                             Header="Zoom Out"
                             Click="ZoomOut" 
                         />
-                        <Separator/>
-                        <MenuItem
+                                <Separator/>
+                                <MenuItem
                             Header="Enable Dark Mode"
                             IsCheckable="false"
                             IsChecked="{Binding PresentationProperties.DarkMode, Mode=OneWay}"
                             Click="ToggleDarkMode"
                         />
-                        <MenuItem
-                            Header="Force on Top"
+                                <MenuItem
+                            Header="Always on Top"
                             IsCheckable="false"
-                            IsChecked="{Binding PresentationProperties.ForceOnTop, Mode=OneWay}"
-                            Click="ToggleForceOnTop"
+                            IsChecked="{Binding PresentationProperties.AlwaysOnTop, Mode=OneWay}"
+                            Click="ToggleAlwaysOnTop"
                         />
-                        </ContextMenu>
-                    </TextBox.ContextMenu>
-                    <TextBox.Style>
-                        <!-- Taken from https://stackoverflow.com/questions/42013899/change-the-focused-border-color-of-a-wpf-textbox-when-it-gotfocus/42023322 -->
-                        <Style TargetType="TextBox">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type TextBox}">
-                                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
+                            </ContextMenu>
+                        </TextBox.ContextMenu>
+                        <TextBox.Style>
+                            <!-- Taken from https://stackoverflow.com/questions/42013899/change-the-focused-border-color-of-a-wpf-textbox-when-it-gotfocus/42023322 -->
+                            <Style TargetType="TextBox">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type TextBox}">
+                                            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                                <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
 
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </TextBox.Style>
-                </TextBox>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
                 <ItemsControl ItemsSource="{Binding Path=ResultPresenter.Results}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -187,17 +212,18 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <Grid Margin="10 0 0 0"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemContainerStyle>
-                        <Style TargetType="ContentPresenter">
-                            <Setter Property="Margin" Value="{Binding Path=Margin}" />
-                        </Style>
-                    </ItemsControl.ItemContainerStyle>
-                </ItemsControl>
-            </Grid>
-        </ScrollViewer>
+                            <ItemsPanelTemplate>
+                                <Grid Margin="10 0 0 0"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Margin" Value="{Binding Path=Margin}" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+
+                    </ItemsControl>
+                </Grid>
+            </ScrollViewer>
     </Grid>
 </mah:MetroWindow>

@@ -1,12 +1,11 @@
-﻿namespace DoodleDigits.Collisions {
+﻿namespace DoodleDigits.Collisions; 
 
-    class CollisionMap {
+class CollisionMap {
 
-        private CellDictionary<bool> cells;
+    private CellDictionary<bool> cells;
 
-        public CollisionMap() {
-            cells = new CellDictionary<bool>();
-        }
-
+    public CollisionMap() {
+        cells = new CellDictionary<bool>();
     }
+
 }

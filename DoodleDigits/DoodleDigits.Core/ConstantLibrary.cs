@@ -8,31 +8,30 @@ using DoodleDigits.Core.Execution.ValueTypes;
 using DoodleDigits.Core.Utilities;
 using Rationals;
 
-namespace DoodleDigits.Core {
-    public class Constant {
+namespace DoodleDigits.Core; 
+public class Constant {
 
-        public readonly string Name;
-        public readonly Value Value;
+    public readonly string Name;
+    public readonly Value Value;
 
-        public Constant(string name, Value value) {
-            Name = name;
-            Value = value;
-        }
+    public Constant(string name, Value value) {
+        Name = name;
+        Value = value;
     }
+}
 
-    public static class ConstantLibrary {
+public static class ConstantLibrary {
 
-        public static Constant[] Constants = {
-            new("true", new BooleanValue(true)),
-            new("false", new BooleanValue(false)),
-            new("pi", new RealValue(RationalUtils.Pi)),
-            new("π", new RealValue(RationalUtils.Pi)),
-            new("tau", new RealValue(RationalUtils.Tau)),
-            new("e", new RealValue(RationalUtils.EulersNumber)),
-            new("infinity", new TooBigValue(TooBigValue.Sign.PositiveInfinity)),
-            new("∞", new TooBigValue(TooBigValue.Sign.PositiveInfinity)),
-        };
+    public static Constant[] Constants = {
+        new("true", new BooleanValue(true)),
+        new("false", new BooleanValue(false)),
+        new("pi", new RealValue(RationalUtils.Pi)),
+        new("π", new RealValue(RationalUtils.Pi)),
+        new("tau", new RealValue(RationalUtils.Tau)),
+        new("e", new RealValue(RationalUtils.EulersNumber)),
+        new("infinity", new TooBigValue(TooBigValue.Sign.PositiveInfinity)),
+        new("∞", new TooBigValue(TooBigValue.Sign.PositiveInfinity)),
+    };
 
 
-    }
 }

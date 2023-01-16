@@ -1,0 +1,77 @@
+﻿<mah:MetroWindow x:Class="DoodleDigits.Setting.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DoodleDigits"
+        xmlns:settings="clr-namespace:DoodleDigits.Setting"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        Title="doodle digits settings" 
+        TitleCharacterCasing="Normal"
+        TitleBarHeight="27"
+        Height="450" 
+        Width="600"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+>
+    <mah:MetroWindow.TitleTemplate>
+        <DataTemplate>
+            <TextBlock Text="{TemplateBinding Content}"
+                       TextTrimming="CharacterEllipsis"
+                       VerticalAlignment="Center"
+                       Margin="8 -1 8 0"
+                       FontWeight="Normal"
+                       FontSize="18"
+                       FontFamily="../Resources/#Patrick Hand" />
+        </DataTemplate>
+    </mah:MetroWindow.TitleTemplate>
+    <mah:MetroWindow.Resources>
+        <ResourceDictionary Source="Styles.xaml"/>
+    </mah:MetroWindow.Resources>
+    <Grid>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="5">
+                <Label Style="{StaticResource SettingHeader}">Calculator</Label>
+
+                <settings:SettingItem 
+                SettingName="Trigonometric angle units"
+                Description="Toggle the unit of measure used by trigonometric functions."
+            >
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Margin="0 0 20 0">Radians</RadioButton>
+                        <RadioButton>Degrees</RadioButton>
+                    </StackPanel>
+                </settings:SettingItem>
+
+
+                <Label Style="{StaticResource SettingHeader}">Preferences</Label>
+                <settings:SettingItem 
+                SettingName="Tabs"
+                Description="Keep multiple different workspaces active in different tabs."
+            >
+                    <mah:ToggleSwitch/>
+                </settings:SettingItem>
+                <settings:SettingItem 
+                SettingName="Save calculator contents"
+                Description="Enable to save the text contents when closing and opening the application."
+            >
+                    <mah:ToggleSwitch/>
+                </settings:SettingItem>
+                <settings:SettingItem 
+                SettingName="Always on top"
+                Description="When enabled the application will be on top of any other windows, even if the other window is selected."
+            >
+                    <mah:ToggleSwitch IsOn="{Binding Settings.AlwaysOnTop}"/>
+                </settings:SettingItem>
+
+                <Label Style="{StaticResource SettingHeader}">Appearance</Label>
+                <settings:SettingItem 
+                    SettingName="Theme"
+                    Description="Change the applications visual appearance."
+                >
+                    <mah:ToggleSwitch/>
+                </settings:SettingItem>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</mah:MetroWindow>

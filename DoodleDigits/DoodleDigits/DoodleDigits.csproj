@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MahApps.Metro" Version="2.4.7" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.9" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +30,12 @@
     <Resource Include="Resources\grid.png" />
     <Resource Include="Resources\grid_dark.png" />
     <Resource Include="Resources\PatrickHand-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Theme\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
